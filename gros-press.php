@@ -33,9 +33,7 @@ function gros_custom_post_type() {
 			'supports' => array( 
 				'title', 
 				'editor', 
-				'excerpt', 
-				'thumbnail', 
-				'custom-fields', 
+				'thumbnail',
 				'revisions' 
 			),
 			'description'   			=> 'All cards in the database',
