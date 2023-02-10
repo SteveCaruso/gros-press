@@ -18,6 +18,14 @@ function gros_custom_post_type() {
 			'public'      => true,
 			'has_archive' => true,
 			'rewrite'     => array( 'slug' => 'card' ), // my custom slug
+			'supports' => array( 
+				'title', 
+				'editor', 
+				'excerpt', 
+				'thumbnail', 
+				'custom-fields', 
+				'revisions' 
+			),
 		)
 	);
 }
