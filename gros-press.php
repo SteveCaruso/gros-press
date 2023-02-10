@@ -9,7 +9,14 @@
 **/
 
 
-//Custom post type add
+/*
+	Add Custom Post Type
+
+	This is the backbone of the system. All cards are represented by custom post types in the Wordpress database.
+
+	We still need import and export functions.
+
+*/
 function gros_custom_post_type() {
 	register_post_type('gros_card',
 		array(
@@ -38,12 +45,17 @@ function gros_custom_post_type() {
 			),
 			'description'   			=> 'All cards in the database',
 			'register_meta_box_cb' 		=> 'gros_card_meta_box',
+			'menu_icon' 				=> 'dashicons-tablet', 
 		)
 	);
 }
 add_action('init', 'gros_custom_post_type');
 
-//Messages
+/*
+	Custom Messages
+
+	Messages for various actions.
+*/
 function gros_card_updated_messages( $messages ) {
 	global $post, $post_ID;
 	$messages['gros_card'] = array(
@@ -64,10 +76,60 @@ function gros_card_updated_messages( $messages ) {
 add_filter( 'post_updated_messages', 'gros_card_updated_messages' );
 
 
-//The Card metabox
+/*
+	The Card Metabox
+
+	This is where all of the card details can be edited.
+*/
+
 function gros_card_meta_box(WP_Post $post) {
     add_meta_box('gros_card', 'Card Details', function() {
-        echo 'Working';
+        
+		
+		//$field_name = 'your_field';
+        //$field_value = get_post_meta($post->ID, $field_name, true);
+
+		/*
+			Fields needed:
+				Name (title of post)
+				Type
+				Artwork (Art & Artist - featured image)
+				Traits (Taxonomy? - Tags)
+				Stat
+				Popcorn
+				Bucket
+				Quote
+				Abilities
+				Title Word
+				Series (Taxonomy? - Categories)
+				Number
+				Mechanic
+
+			The actual body of the post will be for notes and rulings.
+
+		*/
+		
+        //wp_nonce_field('gros_card_nonce', 'gros_card_nonce');
+
+		?>
+		Working!!
+        <!--
+		<table class="form-table">
+            <tr>
+                <th> <label for="<?php echo $field_name; ?>">Your Field</label></th>
+                <td>
+                    <input id="<?php echo $field_name; ?>"
+                           name="<?php echo $field_name; ?>"
+                           type="text"
+                           value="<?php echo esc_attr($field_value); ?>"
+                    />
+                </td>
+            </tr>
+        </table>
+		-->
+        <?php
+
+
     });
 }
 
