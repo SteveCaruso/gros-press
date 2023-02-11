@@ -90,6 +90,15 @@ function gros_card_meta_box(WP_Post $post) {
         //$field_value = get_post_meta($post->ID, $field_name, true);
 
 		$gros_type = get_post_meta($post->ID, 'gros_type', true);
+		$gros_stat = get_post_meta($post->ID, 'gros_stat', true);
+		$gros_popcorn = get_post_meta($post->ID, 'gros_popcorn', true);
+		$gros_bucket = get_post_meta($post->ID, 'gros_bucket', true);
+		$gros_quote = get_post_meta($post->ID, 'gros_quote', true);
+		$gros_abilities = get_post_meta($post->ID, 'gros_abilities', true);
+		$gros_title = get_post_meta($post->ID, 'gros_title', true);
+		$gros_number = get_post_meta($post->ID, 'gros_number', true);
+		$gros_mechanic = get_post_meta($post->ID, 'gros_mechanic', true);
+
 
 		/*
 			Fields needed:
@@ -138,15 +147,91 @@ function gros_card_meta_box(WP_Post $post) {
 			<!-- Traits are a Taxonomy -->
 			
 			<tr>
-                <th><label for="<?php echo $field_name; ?>">Your Field</label></th>
+                <th><label for="gros_stat">Attack/Defense:</label></th>
                 <td>
-                    <input id="<?php echo $field_name; ?>"
-                           name="<?php echo $field_name; ?>"
+                    <input id="gros_stat"
+                           name="gros_stat"
                            type="text"
-                           value="<?php echo esc_attr($field_value); ?>"
+                           value="<?php echo esc_attr($gros_stat); ?>"
+						   size="3"
                     />
                 </td>
             </tr>
+
+			<tr>
+                <th><label for="gros_popcorn">Popcorn Cost:</label></th>
+                <td>
+                    <input id="gros_popcorn"
+                           name="gros_popcorn"
+                           type="text"
+                           value="<?php echo esc_attr($gros_popcorn); ?>"
+						   size="3"
+                    />
+                </td>
+            </tr>
+
+			<tr>
+                <th><label for="gros_bucket">Popcorn Bucket?</label></th>
+                <td>
+                    <input id="gros_bucket"
+                           name="gros_bucket"
+                           type="checkbox"
+                           value="true"
+						   checked="<?php echo ($gros_bucket == "true") ? "true" : "false" ?>"
+                    />
+                </td>
+            </tr>
+
+			<tr>
+                <th><label for="gros_quote">Quote:</label></th>
+                <td>
+					<textarea id="gros_quote" name="gros_quote"><?php echo esc_attr($gros_quote); ?></textarea>
+                </td>
+            </tr>
+
+			<tr>
+                <th><label for="gros_abilities">Ability Text:</label></th>
+                <td>
+					<textarea id="gros_abilities" name="gros_abilities"><?php echo esc_attr($gros_abilities); ?></textarea>
+                </td>
+            </tr>
+
+			<tr>
+                <th><label for="gros_title">Title Word:</label></th>
+                <td>
+                    <input id="gros_title"
+                           name="gros_title"
+                           type="text"
+                           value="<?php echo esc_attr($gros_title); ?>"
+                    />
+                </td>
+            </tr>
+
+			<!-- Series needs to be a Taxonomy -->
+
+			<tr>
+                <th><label for="gros_number">Number in Series:</label></th>
+                <td>
+                    <input id="gros_number"
+                           name="gros_number"
+                           type="text"
+                           value="<?php echo esc_attr($gros_number); ?>"
+						   size="3"
+                    />
+                </td>
+            </tr>
+
+			<tr>
+                <th><label for="gros_mechanic">Title Word:</label></th>
+                <td>
+                    <input id="gros_mechanic"
+                           name="gros_mechanic"
+                           type="text"
+                           value="<?php echo esc_attr($gros_mechanic); ?>"
+                    />
+                </td>
+            </tr>
+
         </table>
 
         <?php
