@@ -89,34 +89,56 @@ function gros_card_meta_box(WP_Post $post) {
 		//$field_name = 'your_field';
         //$field_value = get_post_meta($post->ID, $field_name, true);
 
+		$gros_type = get_post_meta($post->ID, 'gros_type', true);
+
 		/*
 			Fields needed:
 				Name (title of post)
-				Type
+				Type gros_type
 				Artwork (Art & Artist - featured image)
 				Traits (Taxonomy? - Tags)
-				Stat
-				Popcorn
-				Bucket
-				Quote
-				Abilities
-				Title Word
+				Stat gros_stat
+				Popcorn gros_popcorn
+				Bucket gros_bucket
+				Quote gros_quote
+				Abilities gros_abilities
+				Title Word gros_title
 				Series (Taxonomy? - Categories)
-				Number
-				Mechanic
+				Number gros_number
+				Mechanic gros_mechanic
 
 			The actual body of the post will be for notes and rulings.
 
 		*/
 		
-        //wp_nonce_field('gros_card_nonce', 'gros_card_nonce');
+        wp_nonce_field('gros_card_nonce', 'gros_card_nonce');
 
 		?>
-		Working!!
-        <!--
+		
 		<table class="form-table">
-            <tr>
-                <th> <label for="<?php echo $field_name; ?>">Your Field</label></th>
+			<tr>
+                <th><label for="gros_type">Card Type</label></th>
+                <td>
+                    <select id="gros_type"
+                           name="gros_type"
+                           type="text">
+						<option value="">--CHOOSE:--</option>
+						<option <?php if ($gros_type == "character") echo 'selected="true"'; ?> value="character">Character</option>
+						<option <?php if ($gros_type == "creature") echo 'selected="true"'; ?> value="creature">Creature</option>
+						<option <?php if ($gros_type == "roll-the-credits") echo 'selected="true"'; ?> value="roll-the-credits">Roll the Credits</option>
+						<option <?php if ($gros_type == "location") echo 'selected="true"'; ?> value="location">Location</option>
+						<option <?php if ($gros_type == "prop") echo 'selected="true"'; ?> value="prop">Prop</option>
+						<option <?php if ($gros_type == "special-effect") echo 'selected="true"'; ?> value="special-effect">Special Effect</option>
+					</select>
+                </td>
+            </tr>
+
+			<!-- artwork is Featured Image -->
+
+			<!-- Traits are a Taxonomy -->
+			
+			<tr>
+                <th><label for="<?php echo $field_name; ?>">Your Field</label></th>
                 <td>
                     <input id="<?php echo $field_name; ?>"
                            name="<?php echo $field_name; ?>"
@@ -126,7 +148,7 @@ function gros_card_meta_box(WP_Post $post) {
                 </td>
             </tr>
         </table>
-		-->
+
         <?php
 
 
