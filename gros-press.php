@@ -37,10 +37,8 @@ function gros_custom_post_type() {
 			'public'      => true,
 			'has_archive' => true,
 			'rewrite'     => array( 'slug' => 'card' ), // my custom slug
-			'supports' => array( 
-				'title', 
-				'editor', 
-				'thumbnail',
+			'supports' => array(
+				'editor',
 				'revisions' 
 			),
 			'description'   			=> 'All cards in the database',
@@ -89,6 +87,7 @@ function gros_card_meta_box(WP_Post $post) {
 		//$field_name = 'your_field';
         //$field_value = get_post_meta($post->ID, $field_name, true);
 
+		$gros_name = get_post_meta($post->ID, 'gros_name', true);
 		$gros_type = get_post_meta($post->ID, 'gros_type', true);
 		$gros_art = get_post_meta($post->ID, 'gros_art', true);
 		$gros_artist = get_post_meta($post->ID, 'gros_artist', true);
@@ -130,6 +129,18 @@ function gros_card_meta_box(WP_Post $post) {
 		?>
 		
 		<table class="form-table">
+			
+			<tr>
+                <th><label for="gros_name">Card Name:</label></th>
+                <td>
+                    <input id="gros_name"
+                           name="gros_name"
+                           type="text"
+                           value="<?php echo esc_attr($gros_name); ?>"
+                    />
+                </td>
+            </tr>
+		
 			<tr>
                 <th><label for="gros_type">Card Type</label></th>
                 <td>
