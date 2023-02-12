@@ -277,7 +277,7 @@ function gros_card_meta_box(WP_Post $post) {
 /*
 	Save Metabox data
 
-*/
+
 
 // Check for empty string allowing for a value of `0`
 function empty_str( $str ) {
@@ -297,25 +297,6 @@ add_action('save_post', function($post_id){
     if( ! check_admin_referer('gros_nonce', 'gros_nonce') )
         return;
 
-
-	//Check if fields are present, and save as necessary.
-	// Check -> Clean -> Save/Delete
-	/*
-				Name (title of post)
-				Type (gros_type)
-				Artwork (Art & Artist - featured image)
-				Traits (Taxonomy? - Tags)
-				Stat gros_stat
-				Popcorn gros_popcorn
-				Bucket gros_bucket
-				Quote gros_quote
-				Abilities gros_abilities
-				Title Word gros_title
-				Series (Taxonomy? - Categories)
-				Number gros_number
-				Mechanic gros_mechanic	
-	*/
-
     // Do not save meta if fields are not present,
     // like during a restore.
     if( !isset($_POST[$field_name]) )
@@ -330,8 +311,8 @@ add_action('save_post', function($post_id){
     } elseif( empty_str( $field_value ) ) {
         delete_post_meta($post_id, $field_name);
     }
-
-
 });
+
+*/
 
 ?>
