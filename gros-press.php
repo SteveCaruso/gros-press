@@ -194,7 +194,7 @@ function gros_card_meta_box(WP_Post $post) {
             </tr>
 
 			<tr>
-                <th><label for="gros_popcorn">Popcorn Cost:</label></th>
+                <th><label for="gros_popcorn">Popcorn:</label></th>
                 <td>
                     <input id="gros_popcorn"
                            name="gros_popcorn"
@@ -202,18 +202,15 @@ function gros_card_meta_box(WP_Post $post) {
                            value="<?php echo esc_attr($gros_popcorn); ?>"
 						   size="3"
                     />
-                </td>
-            </tr>
 
-			<tr>
-                <th><label for="gros_bucket">Popcorn Bucket?</label></th>
-                <td>
-                    <input id="gros_bucket"
+					<input id="gros_bucket"
                            name="gros_bucket"
                            type="checkbox"
                            value="true"
 						   <?php echo ($gros_bucket == "true") ? 'checked="true"' : '' ?>
                     />
+					<label for="gros_bucket">Bucket?</label>
+					
                 </td>
             </tr>
 
@@ -307,6 +304,8 @@ add_action('save_post', function($post_id){
 	// Secure with nonce field check
     if( ! check_admin_referer('gros_nonce', 'gros_nonce') )
         return;
+
+	//Update post slug
 
     // Do not save meta if fields are not present,
     // like during a restore.
