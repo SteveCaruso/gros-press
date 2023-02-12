@@ -90,12 +90,15 @@ function gros_card_meta_box(WP_Post $post) {
         //$field_value = get_post_meta($post->ID, $field_name, true);
 
 		$gros_type = get_post_meta($post->ID, 'gros_type', true);
+		$gros_art = get_post_meta($post->ID, 'gros_art', true);
+		$gros_artist = get_post_meta($post->ID, 'gros_artist', true);
 		$gros_stat = get_post_meta($post->ID, 'gros_stat', true);
 		$gros_popcorn = get_post_meta($post->ID, 'gros_popcorn', true);
 		$gros_bucket = get_post_meta($post->ID, 'gros_bucket', true);
 		$gros_quote = get_post_meta($post->ID, 'gros_quote', true);
 		$gros_abilities = get_post_meta($post->ID, 'gros_abilities', true);
 		$gros_title = get_post_meta($post->ID, 'gros_title', true);
+		$gros_series = get_post_meta($post->ID, 'gros_series', true);
 		$gros_number = get_post_meta($post->ID, 'gros_number', true);
 		$gros_mechanic = get_post_meta($post->ID, 'gros_mechanic', true);
 
@@ -104,15 +107,17 @@ function gros_card_meta_box(WP_Post $post) {
 			Fields needed:
 				Name (title of post)
 				Type gros_type
-				Artwork (Art & Artist - featured image)
-				Traits (Taxonomy? - Tags)
+				Artwork
+					gros_art
+					gros_artist
+				Traits gros_traits
 				Stat gros_stat
 				Popcorn gros_popcorn
 				Bucket gros_bucket
 				Quote gros_quote
 				Abilities gros_abilities
 				Title Word gros_title
-				Series (Taxonomy? - Categories)
+				Series gros_series
 				Number gros_number
 				Mechanic gros_mechanic
 
@@ -142,9 +147,28 @@ function gros_card_meta_box(WP_Post $post) {
                 </td>
             </tr>
 
-			<!-- artwork is Featured Image -->
+			<tr>
+                <th><label for="gros_art">Art Image:</label></th>
+                <td>
+                    <input id="gros_art"
+                           name="gros_art"
+                           type="text"
+                           value="<?php echo esc_attr($gros_art); ?>"
+						   size="16"
+                    />
+                </td>
+            </tr>
 
-			<!-- Traits are a Taxonomy -->
+			<tr>
+                <th><label for="gros_artist">Artist:</label></th>
+                <td>
+                    <input id="gros_artist"
+                           name="gros_artist"
+                           type="text"
+                           value="<?php echo esc_attr($gros_artist); ?>"
+                    />
+                </td>
+            </tr>
 			
 			<tr>
                 <th><label for="gros_stat">Attack/Defense:</label></th>
@@ -177,7 +201,7 @@ function gros_card_meta_box(WP_Post $post) {
                            name="gros_bucket"
                            type="checkbox"
                            value="true"
-						   checked="<?php echo ($gros_bucket == "true") ? "true" : "false" ?>"
+						   <?php echo ($gros_bucket == "true") ? 'checked="true"' : '' ?>
                     />
                 </td>
             </tr>
@@ -185,14 +209,14 @@ function gros_card_meta_box(WP_Post $post) {
 			<tr>
                 <th><label for="gros_quote">Quote:</label></th>
                 <td>
-					<textarea id="gros_quote" name="gros_quote"><?php echo esc_attr($gros_quote); ?></textarea>
+					<textarea id="gros_quote" name="gros_quote" cols="50" rows="3"><?php echo esc_attr($gros_quote); ?></textarea>
                 </td>
             </tr>
 
 			<tr>
                 <th><label for="gros_abilities">Ability Text:</label></th>
                 <td>
-					<textarea id="gros_abilities" name="gros_abilities"><?php echo esc_attr($gros_abilities); ?></textarea>
+					<textarea id="gros_abilities" name="gros_abilities" cols="50" rows="3"><?php echo esc_attr($gros_abilities); ?></textarea>
                 </td>
             </tr>
 
@@ -207,7 +231,17 @@ function gros_card_meta_box(WP_Post $post) {
                 </td>
             </tr>
 
-			<!-- Series needs to be a Taxonomy -->
+			<tr>
+                <th><label for="gros_series">Series:</label></th>
+                <td>
+                    <input id="gros_series"
+                           name="gros_series"
+                           type="text"
+                           value="<?php echo esc_attr($gros_series); ?>"
+						   size="10"
+                    />
+                </td>
+            </tr>
 
 			<tr>
                 <th><label for="gros_number">Number in Series:</label></th>
@@ -222,7 +256,7 @@ function gros_card_meta_box(WP_Post $post) {
             </tr>
 
 			<tr>
-                <th><label for="gros_mechanic">Title Word:</label></th>
+                <th><label for="gros_mechanic">Mechanic:</label></th>
                 <td>
                     <input id="gros_mechanic"
                            name="gros_mechanic"
@@ -239,5 +273,65 @@ function gros_card_meta_box(WP_Post $post) {
 
     });
 }
+
+/*
+	Save Metabox data
+
+*/
+
+// Check for empty string allowing for a value of `0`
+function empty_str( $str ) {
+    return ! isset( $str ) || $str === "";
+}
+
+// Save and delete meta but not when restoring a revision
+add_action('save_post', function($post_id){
+    $post = get_post($post_id);
+    $is_revision = wp_is_post_revision($post_id);
+
+    // Do not save meta for a revision or on autosave
+    if ( $post->post_type != 'gros_card' || $is_revision )
+        return;
+
+	// Secure with nonce field check
+    if( ! check_admin_referer('gros_nonce', 'gros_nonce') )
+        return;
+
+
+	//Check if fields are present, and save as necessary.
+	// Check -> Clean -> Save/Delete
+	/*
+				Name (title of post)
+				Type (gros_type)
+				Artwork (Art & Artist - featured image)
+				Traits (Taxonomy? - Tags)
+				Stat gros_stat
+				Popcorn gros_popcorn
+				Bucket gros_bucket
+				Quote gros_quote
+				Abilities gros_abilities
+				Title Word gros_title
+				Series (Taxonomy? - Categories)
+				Number gros_number
+				Mechanic gros_mechanic	
+	*/
+
+    // Do not save meta if fields are not present,
+    // like during a restore.
+    if( !isset($_POST[$field_name]) )
+        return;
+
+    // Clean up data
+    $field_value = trim($_POST[$field_name]);
+
+    // Do the saving and deleting
+    if( ! empty_str( $field_value ) ) {
+        update_post_meta($post_id, $field_name, $field_value);
+    } elseif( empty_str( $field_value ) ) {
+        delete_post_meta($post_id, $field_name);
+    }
+
+
+});
 
 ?>
