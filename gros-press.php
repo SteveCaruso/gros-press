@@ -40,6 +40,7 @@ function gros_custom_post_type() {
 			'supports' => array(
                 'title',
 				'editor',
+                'custom_fields',
 				'revisions' 
 			),
 			'description'   			=> 'All cards in the database',
@@ -345,7 +346,7 @@ function gros_card_update($post_id){
         'gros_mechanic'
     );
 
-    foreach($fields as $field) {
+    foreach($fields as $field) { 
         if( isset($_POST[$field]) ) 
             update_post_meta($post_id, $field, $_POST[$field]);
         else
