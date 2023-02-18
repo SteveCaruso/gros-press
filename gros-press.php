@@ -40,7 +40,7 @@ function gros_custom_post_type() {
 			'supports' => array(
                 'title',
 				'editor',
-                'custom_fields',
+                'custom-fields',
 				'revisions' 
 			),
 			'description'   			=> 'All cards in the database',
