@@ -343,7 +343,7 @@ function gros_card_update($post_id){
         }
     }
 
-});
+}
 //add_action('save_post', 'gros_card_update');
 
 ?>
