@@ -287,7 +287,6 @@ function gros_card_meta_box(WP_Post $post) {
 
 /*
 	Save Metabox data
-*/
 
 // Check for empty string allowing for a value of `0`
 function empty_str( $str ) {
@@ -345,5 +344,7 @@ function gros_card_update($post_id){
 
 }
 add_action('save_post', 'gros_card_update');
+
+*/
 
 ?>
