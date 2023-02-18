@@ -287,7 +287,7 @@ function gros_card_meta_box(WP_Post $post) {
 
 /*
 	Save Metabox data
-
+*/
 
 // Check for empty string allowing for a value of `0`
 function empty_str( $str ) {
@@ -295,8 +295,6 @@ function empty_str( $str ) {
 }
 
 // Save and delete data
-add_action('save_post', 'gros_card_update');
-
 function gros_card_update($post_id){
 
     $post = get_post($post_id);
@@ -345,6 +343,7 @@ function gros_card_update($post_id){
         }
     }
 
-});*/
+});
+add_action('save_post', 'gros_card_update');
 
 ?>
