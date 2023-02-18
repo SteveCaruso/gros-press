@@ -311,12 +311,14 @@ function gros_card_update($post_id){
     //    return;
 
 	//Update post slug based on card's unique ID
-    remove_action('save_post', 'gros_card_update');
-    wp_update_post( array(
-        'ID' => $post_id,
-        'post_name' => $gros_series.'-'.$gros_number
-    ));
-    add_action('save_post', 'gros_card_update');
+    if (isset($_POST['gros_series']) && isset($_POST['gros_number'])) {
+        remove_action('save_post', 'gros_card_update');
+        wp_update_post( array(
+            'ID' => $post_id,
+            'post_name' => $_POST['gros_series'].'-'.$_POST['gros_number']
+        ));
+        add_action('save_post', 'gros_card_update');
+    }
 
     //Update fields
     $fields = array(
