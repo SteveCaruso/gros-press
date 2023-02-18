@@ -47,6 +47,7 @@ function gros_custom_post_type() {
 			'menu_icon' 				=> 'dashicons-tablet', 
 		)
 	);
+    add_action('save_post', 'gros_card_update');
 }
 add_action('init', 'gros_custom_post_type');
 
@@ -345,6 +346,5 @@ function gros_card_update($post_id){
     }
 
 }
-add_action('save_post', 'gros_card_update');
 
 ?>
