@@ -124,7 +124,7 @@ function gros_card_meta_box(WP_Post $post) {
 
 		*/
 		
-        wp_nonce_field('gros_card_nonce', 'gros_card_nonce');
+        //wp_nonce_field('gros_card_nonce', 'gros_card_nonce');
 
 		?>
 		
