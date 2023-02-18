@@ -287,6 +287,7 @@ function gros_card_meta_box(WP_Post $post) {
 
 /*
 	Save Metabox data
+*/
 
 // Check for empty string allowing for a value of `0`
 function empty_str( $str ) {
@@ -304,8 +305,8 @@ function gros_card_update($post_id){
         return;
 
 	// Secure with nonce field check
-    if( ! check_admin_referer('gros_nonce', 'gros_nonce') )
-        return;
+    //if( ! check_admin_referer('gros_nonce', 'gros_nonce') )
+    //    return;
 
 	//Update post slug based on card's unique ID
     remove_action('save_post', 'gros_card_update');
@@ -344,7 +345,5 @@ function gros_card_update($post_id){
 
 }
 add_action('save_post', 'gros_card_update');
-
-*/
 
 ?>
