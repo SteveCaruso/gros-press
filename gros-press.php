@@ -87,30 +87,26 @@ function gros_card_meta_box(WP_Post $post) {
     add_meta_box('gros_card', 'Card Details', function() {
         
 
-        echo "Post Metadata:<br>";
+        echo "Post Metadata for ".$post->ID.":<br>";
 
-        $postmetas = get_post_meta($post->ID);
-
-        foreach($postmetas as $meta_key=>$meta_value) {
-            echo $meta_key . ' : ' . $meta_value[0] . '<br/>';
-        }
+        print_r(get_post_meta($post->ID));
 		
 		//$field_name = 'your_field';
         //$field_value = get_post_meta($post->ID, $field_name, true);
 
-		$gros_name = get_post_meta($post->ID, 'gros_name', true);
-		$gros_type = get_post_meta($post->ID, 'gros_type', true);
-		$gros_art = get_post_meta($post->ID, 'gros_art', true);
-		$gros_artist = get_post_meta($post->ID, 'gros_artist', true);
-		$gros_stat = get_post_meta($post->ID, 'gros_stat', true);
-		$gros_popcorn = get_post_meta($post->ID, 'gros_popcorn', true);
-		$gros_bucket = get_post_meta($post->ID, 'gros_bucket', true);
-		$gros_quote = get_post_meta($post->ID, 'gros_quote', true);
+		$gros_name      = get_post_meta($post->ID, 'gros_name', true);
+		$gros_type      = get_post_meta($post->ID, 'gros_type', true);
+		$gros_art       = get_post_meta($post->ID, 'gros_art', true);
+		$gros_artist    = get_post_meta($post->ID, 'gros_artist', true);
+		$gros_stat      = get_post_meta($post->ID, 'gros_stat', true);
+		$gros_popcorn   = get_post_meta($post->ID, 'gros_popcorn', true);
+		$gros_bucket    = get_post_meta($post->ID, 'gros_bucket', true);
+		$gros_quote     = get_post_meta($post->ID, 'gros_quote', true);
 		$gros_abilities = get_post_meta($post->ID, 'gros_abilities', true);
-		$gros_title = get_post_meta($post->ID, 'gros_title', true);
-		$gros_series = get_post_meta($post->ID, 'gros_series', true);
-		$gros_number = get_post_meta($post->ID, 'gros_number', true);
-		$gros_mechanic = get_post_meta($post->ID, 'gros_mechanic', true);
+		$gros_title     = get_post_meta($post->ID, 'gros_title', true);
+		$gros_series    = get_post_meta($post->ID, 'gros_series', true);
+		$gros_number    = get_post_meta($post->ID, 'gros_number', true);
+		$gros_mechanic  = get_post_meta($post->ID, 'gros_mechanic', true);
 
 
 		/*
