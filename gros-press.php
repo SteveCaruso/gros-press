@@ -202,15 +202,18 @@ function gros_card_meta_box(WP_Post $post) {
                            value="<?php echo esc_attr($gros_popcorn); ?>"
 						   size="3"
                     />
+                </td>
+            </tr>
 
-					<input id="gros_bucket"
+			<tr>
+                <th><label for="gros_bucket">Popcorn Bucket?</label></th>
+                <td>
+                    <input id="gros_bucket"
                            name="gros_bucket"
                            type="checkbox"
                            value="true"
 						   <?php echo ($gros_bucket == "true") ? 'checked="true"' : '' ?>
                     />
-					<label for="gros_bucket">Bucket?</label>
-					
                 </td>
             </tr>
 
@@ -284,16 +287,18 @@ function gros_card_meta_box(WP_Post $post) {
 
 /*
 	Save Metabox data
-
-
+*/
 
 // Check for empty string allowing for a value of `0`
 function empty_str( $str ) {
     return ! isset( $str ) || $str === "";
 }
 
-// Save and delete meta but not when restoring a revision
-add_action('save_post', function($post_id){
+// Save and delete data
+add_action('save_post', 'gros_card_update');
+
+function gros_card_update($post_id){
+
     $post = get_post($post_id);
     $is_revision = wp_is_post_revision($post_id);
 
@@ -305,24 +310,41 @@ add_action('save_post', function($post_id){
     if( ! check_admin_referer('gros_nonce', 'gros_nonce') )
         return;
 
-	//Update post slug
+	//Update post slug based on card's unique ID
+    remove_action('save_post', 'gros_card_update');
+    wp_update_post( array(
+        'ID' => $post_id,
+        'post_name' => $gros_series.'-'.$gros_number
+    ));
+    add_action('save_post', 'gros_card_update');
 
-    // Do not save meta if fields are not present,
-    // like during a restore.
-    if( !isset($_POST[$field_name]) )
-        return;
+    //Update fields
+    $fields = array(
+        'gros_name',
+        'gros_type',
+        'gros_art',
+        'gros_artist',
+        'gros_stat',
+        'gros_popcorn',
+        'gros_bucket',
+        'gros_quote',
+        'gros_abilities',
+        'gros_title',
+        'gros_series',
+        'gros_number',
+        'gros_mechanic'
+    );
 
-    // Clean up data
-    $field_value = trim($_POST[$field_name]);
-
-    // Do the saving and deleting
-    if( ! empty_str( $field_value ) ) {
-        update_post_meta($post_id, $field_name, $field_value);
-    } elseif( empty_str( $field_value ) ) {
-        delete_post_meta($post_id, $field_name);
+    foreach($fields as $field) {
+        if( isset($_POST[$field]) ) {
+            if( ! empty_str( $_POST[$field] ) ) {
+                update_post_meta($post_id, $field, $_POST[$field]);
+            } elseif( empty_str( $_POST[$field] ) ) {
+                delete_post_meta($post_id, $field);
+            }
+        }
     }
-});
 
-*/
+});
 
 ?>
