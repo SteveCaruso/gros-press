@@ -85,6 +85,9 @@ add_filter( 'post_updated_messages', 'gros_card_updated_messages' );
 function gros_card_meta_box(WP_Post $post) {
     add_meta_box('gros_card', 'Card Details', function() {
         
+
+        echo "Post Metadata:<br>";
+
         $postmetas = get_post_meta($post->ID);
 
         foreach($postmetas as $meta_key=>$meta_value) {
