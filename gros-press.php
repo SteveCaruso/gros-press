@@ -338,13 +338,10 @@ function gros_card_update($post_id){
     );
 
     foreach($fields as $field) {
-        if( isset($_POST[$field]) ) {
-            if( ! empty_str( $_POST[$field] ) ) {
-                update_post_meta($post_id, $field, $_POST[$field]);
-            } elseif( empty_str( $_POST[$field] ) ) {
-                delete_post_meta($post_id, $field);
-            }
-        }
+        if( isset($_POST[$field]) ) 
+            update_post_meta($post_id, $field, $_POST[$field]);
+        else
+            delete_post_meta($post_id, $field);
     }
 
 }
