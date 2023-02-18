@@ -38,6 +38,7 @@ function gros_custom_post_type() {
 			'has_archive' => true,
 			'rewrite'     => array( 'slug' => 'card' ), // my custom slug
 			'supports' => array(
+                'title',
 				'editor',
 				'revisions' 
 			),
